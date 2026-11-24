@@ -23,6 +23,12 @@ TEXT = ("LGTM. Tests pass, logic holds, and the part I don't understand "
 
 OUTPUT_PATH = "/output/entry.txt"
 
+# The gate rejects anything outside 1-140 characters or more than one line,
+# so check the text before writing instead of trusting it blindly.
+assert 1 <= len(TEXT) <= 140, "entry must be 1-140 characters"
+assert "\n" not in TEXT, "entry must be a single line"
+assert TEXT.strip(), "entry must not be only whitespace"
+
 
 def main():
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
